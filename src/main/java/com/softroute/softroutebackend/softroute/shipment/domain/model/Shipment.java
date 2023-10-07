@@ -15,8 +15,7 @@ import java.util.Date;
 public class Shipment  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    private Long id;
     private String description;
     private Long code;
     private Double freight;
