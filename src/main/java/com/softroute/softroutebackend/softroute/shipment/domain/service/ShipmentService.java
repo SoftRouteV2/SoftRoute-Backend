@@ -1,7 +1,7 @@
 package com.softroute.softroutebackend.softroute.shipment.domain.service;
 
 import com.softroute.softroutebackend.softroute.shipment.domain.model.Shipment;
-import jakarta.xml.ws.Response;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 public interface ShipmentService {
 
     List<Shipment> getAll();
-    Shipment getId(Long id);
+    Shipment getId(Long shipment_id);
     Shipment getByCode(Long code);
     List<Shipment> getByFreight(Double freight);
     List<Shipment> getByQuantity(Integer quantity);
@@ -17,6 +17,6 @@ public interface ShipmentService {
     List<Shipment> getByArrivalDate(Date arrivalDate);
     Shipment create(Shipment shipment);
     Shipment update(Long shipment_id, Shipment shipment);
-    Response<?> delete(Long shipment_id);
+    ResponseEntity<?> delete(Long shipment_id);
 
 }

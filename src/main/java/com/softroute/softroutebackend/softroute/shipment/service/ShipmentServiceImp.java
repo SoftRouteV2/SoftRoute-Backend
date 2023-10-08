@@ -1,14 +1,20 @@
 package com.softroute.softroutebackend.softroute.shipment.service;
 
+import com.softroute.softroutebackend.shared.exception.ResourceNotFoundException;
+import com.softroute.softroutebackend.shared.exception.ResourceValidationException;
 import com.softroute.softroutebackend.softroute.shipment.domain.model.Shipment;
 import com.softroute.softroutebackend.softroute.shipment.domain.persistence.ShipmentRepository;
 import com.softroute.softroutebackend.softroute.shipment.domain.service.ShipmentService;
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
-import jakarta.xml.ws.Response;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
 @Service
 public class ShipmentServiceImp implements ShipmentService {
     private static final String ENTITY = "Shipment";
@@ -27,8 +33,8 @@ public class ShipmentServiceImp implements ShipmentService {
     }
 
     @Override
-    public Shipment getId(Long id) {
-        return null;
+    public Shipment getId(Long shipment_id) {
+        return shipmentRepository.findById(shipment_id).orElseThrow(()->new ResourceNotFoundException(ENTITY,shipment_id));
     }
 
     @Override
@@ -58,6 +64,23 @@ public class ShipmentServiceImp implements ShipmentService {
 
     @Override
     public Shipment create(Shipment shipment) {
+        Set<ConstraintViolation<Shipment>> violations = validator.validate(shipment);
+
+        if(!violations.isEmpty())
+            throw new ResourceValidationException(ENTITY, violations);
+
+        Optional<Shipment> agencyWithId = shipmentRepository.findById(shipment.getId());
+
+        if (agencyWithId.isPresent())
+            throw new ResourceValidationException(ENTITY,
+                    "A shipment with the same id already exists.");
+
+
+        Optional<Shipment> agencyWithCode = shipmentRepository.findById(shipment.getId());
+
+        if (agencywithId != null)
+            throw new ResourceValidationException(ENTITY,
+                    "A shipment with the same id already exists.");
         return null;
     }
 
@@ -67,7 +90,11 @@ public class ShipmentServiceImp implements ShipmentService {
     }
 
     @Override
-    public Response<?> delete(Long shipment_id) {
-        return null;
+    public ResponseEntity<?> delete(Long shipment_id) {
+        return shipmentRepository.findById(shipment_id).map(
+                agency -> {
+                    shipmentRepository.delete(agency);
+                    return ResponseEntity.ok().build();
+                }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, shipment_id));
     }
 }
