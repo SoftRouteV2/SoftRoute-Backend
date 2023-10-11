@@ -76,11 +76,11 @@ public class ShipmentServiceImp implements ShipmentService {
                     "A shipment with the same id already exists.");
 
 
-        Optional<Shipment> agencyWithCode = shipmentRepository.findById(shipment.getId());
-
-        if (agencywithId != null)
-            throw new ResourceValidationException(ENTITY,
-                    "A shipment with the same id already exists.");
+//        Optional<Shipment> agencyWithCode = shipmentRepository.findById(shipment.getId());
+//
+//        if (agencywithId != null)
+//            throw new ResourceValidationException(ENTITY,
+//                    "A shipment with the same id already exists.");
         return null;
     }
 
