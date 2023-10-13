@@ -69,24 +69,38 @@ public class ShipmentServiceImp implements ShipmentService {
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
-        Optional<Shipment> agencyWithId = shipmentRepository.findById(shipment.getId());
+        Shipment shipmentWithId = shipmentRepository.findShipmentById(shipment.getId());
 
-        if (agencyWithId.isPresent())
+        if (shipmentWithId!=null)
             throw new ResourceValidationException(ENTITY,
                     "A shipment with the same id already exists.");
 
+        Shipment shipmentWithCode=shipmentRepository.findByCode(shipment.getCode());
+        if(shipmentWithCode!=null)
+            throw new ResourceValidationException(ENTITY, "A shipment with the same code already exists");
 
-//        Optional<Shipment> agencyWithCode = shipmentRepository.findById(shipment.getId());
-//
-//        if (agencywithId != null)
-//            throw new ResourceValidationException(ENTITY,
-//                    "A shipment with the same id already exists.");
-        return null;
+        return shipmentRepository.save(shipment);
     }
 
     @Override
-    public Shipment update(Long shipment_id, Shipment shipment) {
-        return null;
+    public Shipment update(Long shipment_id, Shipment request) {
+        Set<ConstraintViolation<Shipment>> violations = validator.validate(request);
+
+        if (!violations.isEmpty())
+            throw new ResourceValidationException(ENTITY, violations);
+
+        Shipment shipmentWithCode=shipmentRepository.findByCode(request.getCode());
+        if(shipmentWithCode!=null)
+            throw new ResourceValidationException(ENTITY, "A shipment with the same code already exists");
+
+        return shipmentRepository.findById(shipment_id).map(shipment ->
+                        shipmentRepository.save(shipment.withDescription(request.getDescription())
+                                .withFreight(request.getFreight())
+                                .withConsignee(request.getConsignee())
+                                .withQuantity(request.getQuantity())
+                                .withArrivalDate(request.getArrivalDate())
+                                .withDeliveredDate(request.getDeliveredDate())))
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, shipment_id));
     }
 
     @Override

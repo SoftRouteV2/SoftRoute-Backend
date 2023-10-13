@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ShipmentRepository extends JpaRepository<Shipment, Long> {
     Shipment findByCode(Long code);
+    Shipment findShipmentById(Long shipmentId);
     List<Shipment> findByFreight(Double freight);
     List<Shipment> findByQuantity(Integer quantity);
     List<Shipment> findByDeliveredDate(Date deliveredDate);

@@ -30,4 +30,8 @@ public class ShipmentMapper implements Serializable {
         return new PageImpl<>(mapper.mapList(modelList, ShipmentResource.class), pageable, modelList.size());
     }
 
+    public List<ShipmentResource> modelList(List<Shipment> modelList){
+        return mapper.mapList(modelList,ShipmentResource.class);
+    }
+
 }

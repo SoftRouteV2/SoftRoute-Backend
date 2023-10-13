@@ -22,6 +22,7 @@ public class Shipment  {
     private Integer quantity;
     private Date deliveredDate;
     private Date arrivalDate;
+    private String Consignee;
     //private Employee employee_id;
     //private Sender sender_id;
     //private Consignee consignee_id;
