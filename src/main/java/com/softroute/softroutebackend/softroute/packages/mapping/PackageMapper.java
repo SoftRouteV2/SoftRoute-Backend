@@ -20,19 +20,15 @@ import java.util.List;
 public class PackageMapper implements Serializable {
     @Autowired
     EnhancedModelMapper mapper;
-    public PackageResource toResource(Package model) { return mapper.map(model, PackageResource.class); }
-
+    public PackageResource toResource(Package model) {
+        return mapper.map(model, PackageResource.class);
+    }
     public Package toModel(CreatePackageResource resource) { return mapper.map(resource, Package.class); }
-
     public Package toModel(UpdatePackageResource resource) { return mapper.map(resource, Package.class); }
-
     public Page<PackageResource> modelListPage(List<Package> modelList, Pageable pageable){
         return new PageImpl<>(mapper.mapList(modelList, PackageResource.class), pageable, modelList.size());
     }
-
     public List<PackageResource> modelList(List<Package> modelList){
         return mapper.mapList(modelList,PackageResource.class);
     }
-
-
 }
