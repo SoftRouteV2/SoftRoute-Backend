@@ -8,10 +8,11 @@ import com.softroute.softroutebackend.softroute.company.domain.service.CompanySe
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
-
+@Service
 public class CompanyServiceImp implements CompanyService {
     private static final String ENTITY = "Company";
     private final CompanyRepository companyRepository;
