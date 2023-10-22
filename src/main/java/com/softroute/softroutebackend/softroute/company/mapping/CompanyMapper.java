@@ -3,6 +3,8 @@ package com.softroute.softroutebackend.softroute.company.mapping;
 import com.softroute.softroutebackend.shared.mapping.EnhancedModelMapper;
 import com.softroute.softroutebackend.softroute.company.domain.model.Company;
 import com.softroute.softroutebackend.softroute.company.resource.CompanyResource;
+import com.softroute.softroutebackend.softroute.company.resource.CreateCompanyResource;
+import com.softroute.softroutebackend.softroute.company.resource.UpdateCompanyResource;
 import com.softroute.softroutebackend.softroute.packages.domain.model.Package;
 import com.softroute.softroutebackend.softroute.packages.resource.CreatePackageResource;
 import com.softroute.softroutebackend.softroute.packages.resource.PackageResource;
@@ -25,8 +27,8 @@ public class CompanyMapper implements Serializable {
     public CompanyResource toResource(Company model){
         return mapper.map(model, CompanyResource.class);
     }
-    public Company toModel(CreatePackageResource resource) { return mapper.map(resource, Company.class); }
-    public Company toModel(UpdatePackageResource resource) { return mapper.map(resource, Company.class); }
+    public Company toModel(CreateCompanyResource resource) { return mapper.map(resource, Company.class); }
+    public Company toModel(UpdateCompanyResource resource) { return mapper.map(resource, Company.class); }
     public Page<CompanyResource> modelListPage(List<Company> modelList, Pageable pageable){
         return new PageImpl<>(mapper.mapList(modelList, CompanyResource.class), pageable, modelList.size());
     }
