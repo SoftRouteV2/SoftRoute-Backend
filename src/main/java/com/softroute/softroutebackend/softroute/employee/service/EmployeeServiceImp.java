@@ -9,10 +9,11 @@ import com.softroute.softroutebackend.softroute.employee.domain.service.Employee
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
-
+@Service
 public class EmployeeServiceImp implements EmployeeService {
     private static final String ENTITY = "Employee";
     private final EmployeeRepository employeeRepository;
