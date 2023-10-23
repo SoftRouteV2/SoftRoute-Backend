@@ -1,17 +1,12 @@
 package com.softroute.softroutebackend.softroute.shipment.domain.model;
 
-
-import com.softroute.softroutebackend.softroute.packages.domain.model.Package;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Date;
-import java.util.List;
 
-@Getter
 @Setter
 @With
 @NoArgsConstructor

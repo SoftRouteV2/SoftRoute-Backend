@@ -61,7 +61,7 @@ public class ShipmentServiceImp implements ShipmentService {
     public List<Shipment> getByArrivalDate(Date arrivalDate) {
         return shipmentRepository.findByArrivalDate(arrivalDate);
     }
-
+    
     @Override
     public Shipment create(Shipment shipment) {
         Set<ConstraintViolation<Shipment>> violations = validator.validate(shipment);
