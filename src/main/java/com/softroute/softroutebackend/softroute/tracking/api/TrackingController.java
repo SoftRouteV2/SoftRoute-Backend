@@ -62,7 +62,7 @@ public class TrackingController {
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = TrackingResource.class))})
     })
-    @GetMapping("name/{latidude}")
+    @GetMapping("latidude/{latidude}")
     public TrackingResource getTrackingByName(@PathVariable("latitude") String latitude) {
         return mapper.toResource(trackingService.getByLatitude(latitude));
     }
@@ -74,7 +74,7 @@ public class TrackingController {
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = TrackingResource.class))})
     })
-    @GetMapping("name/{longitude}")
+    @GetMapping("longitude/{longitude}")
     public TrackingResource getTrackingByLongitude(@PathVariable("longitude") String longitude) {
         return mapper.toResource(trackingService.getByLongitude(longitude));
     }
