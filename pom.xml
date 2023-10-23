@@ -14,7 +14,7 @@
     <name>SoftRoute-Backend</name>
     <description>SoftRoute-Backend</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>8</java.version>
     </properties>
     <dependencies>
         <dependency>
