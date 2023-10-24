@@ -23,7 +23,6 @@ public class Company {
     private String companyName;
     @NotNull
     @Column(name = "company_ruc")
-    @Size(max = 8)
     private Long ruc;
     @NotBlank
     @Column(name = "company_password", nullable = false)
@@ -35,6 +34,5 @@ public class Company {
     private String email;
     @NotNull
     @Column(name = "company_phone")
-    @Size(max = 9)
     private Long phone;
 }

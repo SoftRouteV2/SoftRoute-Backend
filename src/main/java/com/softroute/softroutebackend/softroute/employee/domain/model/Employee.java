@@ -20,7 +20,6 @@ public class Employee {
     private Long employeeId;
     @NotNull
     @Column(name = "employee_dni")
-    @Size(max = 8)
     private Long dni;
     @NotBlank
     @Column(name = "employee_name")

@@ -6,6 +6,7 @@ import com.softroute.softroutebackend.softroute.company.domain.presistence.Compa
 import com.softroute.softroutebackend.softroute.employee.domain.model.Employee;
 import com.softroute.softroutebackend.softroute.employee.domain.persistence.EmployeeRepository;
 import com.softroute.softroutebackend.softroute.employee.domain.service.EmployeeService;
+import com.softroute.softroutebackend.softroute.packages.domain.model.Package;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,10 @@ public class EmployeeServiceImp implements EmployeeService {
     @Override
     public Employee getEmployeeByEmailAndPassword(String email, String password) {
         return employeeRepository.findByEmailAndPassword(email,password);
+    }
+    @Override
+    public List<Employee> getEmployeeByCompanyId(Long companyId) {
+        return employeeRepository.findByCompany_CompanyId(companyId);
     }
     @Override
     public Employee create(Long companyId,Employee employee) {
