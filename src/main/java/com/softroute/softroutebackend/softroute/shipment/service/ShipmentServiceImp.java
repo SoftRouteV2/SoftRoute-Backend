@@ -2,6 +2,10 @@ package com.softroute.softroutebackend.softroute.shipment.service;
 
 import com.softroute.softroutebackend.shared.exception.ResourceNotFoundException;
 import com.softroute.softroutebackend.shared.exception.ResourceValidationException;
+import com.softroute.softroutebackend.softroute.employee.domain.model.Employee;
+import com.softroute.softroutebackend.softroute.employee.domain.persistence.EmployeeRepository;
+import com.softroute.softroutebackend.softroute.sender.domain.model.Sender;
+import com.softroute.softroutebackend.softroute.sender.domain.presistence.SenderRepository;
 import com.softroute.softroutebackend.softroute.shipment.domain.model.Shipment;
 import com.softroute.softroutebackend.softroute.shipment.domain.persistence.ShipmentRepository;
 import com.softroute.softroutebackend.softroute.shipment.domain.service.ShipmentService;
@@ -12,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -20,11 +23,15 @@ public class ShipmentServiceImp implements ShipmentService {
     private static final String ENTITY = "Shipment";
 
     private final ShipmentRepository shipmentRepository;
+    private final EmployeeRepository employeeRepository;
+    private final SenderRepository senderRepository;
 
     private final Validator validator;
 
-    public ShipmentServiceImp(ShipmentRepository shipmentRepository,Validator validator) {
+    public ShipmentServiceImp(ShipmentRepository shipmentRepository,EmployeeRepository employeeRepository,SenderRepository senderRepository,Validator validator) {
         this.shipmentRepository=shipmentRepository;
+        this.employeeRepository=employeeRepository;
+        this.senderRepository=senderRepository;
         this.validator=validator;
     }
     @Override
@@ -61,46 +68,51 @@ public class ShipmentServiceImp implements ShipmentService {
     public List<Shipment> getByArrivalDate(Date arrivalDate) {
         return shipmentRepository.findByArrivalDate(arrivalDate);
     }
+    @Override
+    public List<Shipment> getShipmentsByEmployeeId(Long employeeId) {
+        return shipmentRepository.findShipmentsByEmployeeId(employeeId);
+    }
+    @Override
+    public List<Shipment> getShipmentsBySenderId(Long senderId) {
+        return shipmentRepository.findShipmentsBySenderId(senderId);
+    }
     
     @Override
-    public Shipment create(Shipment shipment) {
+    public Shipment create(Shipment shipment,Long employeeId, Long senderId) {
         Set<ConstraintViolation<Shipment>> violations = validator.validate(shipment);
 
-        if(!violations.isEmpty())
+        if (!violations.isEmpty()) {
             throw new ResourceValidationException(ENTITY, violations);
+        }
 
+        //search employee &w sender by id
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with ID: " + employeeId));
+
+        Sender sender = senderRepository.findById(senderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Sender not found with ID: " + senderId));
+
+        //set employee and sender to shipment
+        shipment.setEmployee(employee);
+        shipment.setSender(sender);
+
+        //verify if there is an existing shipment with th same Id or code
         Shipment shipmentWithId = shipmentRepository.findShipmentById(shipment.getId());
+        if (shipmentWithId != null) {
+            throw new ResourceValidationException(ENTITY, "A shipment with the same ID already exists");
+        }
 
-        if (shipmentWithId!=null)
-            throw new ResourceValidationException(ENTITY,
-                    "A shipment with the same id already exists.");
-
-        Shipment shipmentWithCode=shipmentRepository.findByCode(shipment.getCode());
-        if(shipmentWithCode!=null)
+        Shipment shipmentWithCode = shipmentRepository.findByCode(shipment.getCode());
+        if (shipmentWithCode != null) {
             throw new ResourceValidationException(ENTITY, "A shipment with the same code already exists");
+        }
 
         return shipmentRepository.save(shipment);
     }
 
     @Override
-    public Shipment update(Long shipment_id, Shipment request) {
-        Set<ConstraintViolation<Shipment>> violations = validator.validate(request);
-
-        if (!violations.isEmpty())
-            throw new ResourceValidationException(ENTITY, violations);
-
-        Shipment shipmentWithCode=shipmentRepository.findByCode(request.getCode());
-        if(shipmentWithCode!=null)
-            throw new ResourceValidationException(ENTITY, "A shipment with the same code already exists");
-
-        return shipmentRepository.findById(shipment_id).map(shipment ->
-                        shipmentRepository.save(shipment.withDescription(request.getDescription())
-                                .withFreight(request.getFreight())
-                                .withConsignee(request.getConsignee())
-                                .withQuantity(request.getQuantity())
-                                .withArrivalDate(request.getArrivalDate())
-                                .withDeliveredDate(request.getDeliveredDate())))
-                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, shipment_id));
+    public Shipment update(Long shipmentId, Shipment request) {
+        return shipmentRepository.save(request);
     }
 
     @Override
