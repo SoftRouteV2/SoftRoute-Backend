@@ -10,6 +10,7 @@ public interface EmployeeService {
     List<Employee> getAll();
     Employee getByDNI(Long dni);
     Employee getByName(String name);
+    List<Employee> getEmployeeByCompanyId(Long companyId);
     Employee getEmployeeById(Long employeeId);
     Employee getEmployeeByEmailAndPassword(String email, String password);
     Employee create(Long companyId, Employee employee);

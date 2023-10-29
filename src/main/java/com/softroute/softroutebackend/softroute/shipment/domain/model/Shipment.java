@@ -1,15 +1,13 @@
 package com.softroute.softroutebackend.softroute.shipment.domain.model;
 
-
-import com.softroute.softroutebackend.softroute.packages.domain.model.Package;
-
+import com.softroute.softroutebackend.softroute.employee.domain.model.Employee;
+import com.softroute.softroutebackend.softroute.sender.domain.model.Sender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -26,21 +24,23 @@ public class Shipment  {
     private String description;
     @NotNull
     private Long code;
-    @NotBlank
+    @NotNull
     private Double freight;
-    @NotBlank
+    @NotNull
     private Integer quantity;
-    @NotBlank
+
     private Date deliveredDate;
-    @NotBlank
+
     private Date arrivalDate;
     @NotBlank
     private String Consignee;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
+    private Sender sender;
 
-    //private Employee employee_id;
-    //private Sender sender_id;
-    //private Consignee consignee_id;
-    //private Status status_id;
 
 
 }

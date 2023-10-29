@@ -1,5 +1,6 @@
 package com.softroute.softroutebackend.softroute.employee.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.softroute.softroutebackend.softroute.company.domain.model.Company;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -20,7 +21,6 @@ public class Employee {
     private Long employeeId;
     @NotNull
     @Column(name = "employee_dni")
-    @Size(max = 8)
     private Long dni;
     @NotBlank
     @Column(name = "employee_name")
@@ -37,5 +37,6 @@ public class Employee {
     //relationships
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "company_id", nullable = false)
+    @JsonIgnore
     private Company company;
 }

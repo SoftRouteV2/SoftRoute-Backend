@@ -1,5 +1,9 @@
 package com.softroute.softroutebackend.softroute.shipment.resource;
 
+import com.softroute.softroutebackend.softroute.employee.domain.model.Employee;
+import com.softroute.softroutebackend.softroute.employee.resource.EmployeeResource;
+import com.softroute.softroutebackend.softroute.sender.domain.model.Sender;
+import com.softroute.softroutebackend.softroute.sender.resource.SenderResource;
 import lombok.*;
 
 import java.util.Date;
@@ -17,6 +21,8 @@ public class ShipmentResource {
     private Date deliveredDate;
     private Date arrivalDate;
     private String Consignee;
+    private EmployeeResource employee;
+    private SenderResource sender;
     //private Employee employee_id;
     //private Sender sender_id;
     //private Consignee consignee_id;
