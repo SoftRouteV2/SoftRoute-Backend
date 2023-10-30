@@ -16,4 +16,6 @@ public interface EmployeeService {
     Employee create(Long companyId, Employee employee);
     Employee update(Long employeeId,Long companyId, Employee request);
     ResponseEntity<?> delete(Long companyId, Long employeeId);
+
+    Employee getEmployeeByEmail(String email);
 }
