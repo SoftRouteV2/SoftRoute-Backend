@@ -21,4 +21,6 @@ public interface ShipmentService {
     List<Shipment> getShipmentsByEmployeeId(Long employeeId);
     List<Shipment> getShipmentsBySenderId(Long senderId);
     List<Shipment> getShipmentsByDestinationId(Long destinationId);
+    List<Shipment> getShipmentsByDeparture(String departure);
+    List<Shipment> getShipmentsByArrival(String arrival);
 }

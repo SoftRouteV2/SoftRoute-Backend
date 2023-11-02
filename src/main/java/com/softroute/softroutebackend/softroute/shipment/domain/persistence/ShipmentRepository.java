@@ -29,6 +29,15 @@ public interface ShipmentRepository extends JpaRepository<Shipment, Long> {
     @Query("SELECT s FROM Shipment s WHERE s.destination.destinationId = :destinationId")
     List<Shipment> findShipmentsByDestinationId(@Param("destinationId") Long destinationId);
 
+    @Query("SELECT s FROM Shipment s WHERE s.destination.departure = :departure")
+    List<Shipment> findShipmentsByDeparture(@Param("departure") String departure);
+
+    @Query("SELECT s FROM Shipment s WHERE s.destination.arrival = :arrival")
+    List<Shipment> findShipmentsByArrival(@Param("arrival") String arrival);
+
+
+
+
 
 
 
