@@ -56,8 +56,12 @@ public class DestinationServiceImp implements DestinationService {
 
         if(!destinationRepository.existsById(destinationId))
             throw new ResourceNotFoundException("Destination", destinationId);
-        
-        return destinationRepository.save(request);
+
+        return destinationRepository.findById(destinationId).map(destination ->
+                        destinationRepository.save(destination.withArrival(request.getArrival())
+                                .withDeparture(request.getDeparture())))
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, destinationId));
+
     }
 
     @Override
