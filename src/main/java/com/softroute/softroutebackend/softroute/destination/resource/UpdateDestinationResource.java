@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateDestinationResource {
-
+    private Long destinationId;
     @NotBlank
     @Column(name = "departure", nullable = false)
     @Size(max = 250)
