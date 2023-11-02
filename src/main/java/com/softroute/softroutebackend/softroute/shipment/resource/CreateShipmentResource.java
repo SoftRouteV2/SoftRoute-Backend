@@ -1,5 +1,6 @@
 package com.softroute.softroutebackend.softroute.shipment.resource;
 
+import com.softroute.softroutebackend.softroute.destination.domain.model.Destination;
 import com.softroute.softroutebackend.softroute.employee.domain.model.Employee;
 import com.softroute.softroutebackend.softroute.sender.domain.model.Sender;
 import jakarta.validation.constraints.NotBlank;
@@ -28,6 +29,7 @@ public class CreateShipmentResource {
     private Date arrivalDate;
     @NotBlank
     private String Consignee;
+
 
     //private Employee employee_id;
     //private Sender sender_id;

@@ -21,5 +21,15 @@ public interface ShipmentRepository extends JpaRepository<Shipment, Long> {
 
     @Query("SELECT s FROM Shipment s WHERE s.sender.senderId = :senderId")
     List<Shipment> findShipmentsBySenderId(@Param("senderId") Long senderId);
+    // this works if we want to send the id outside the json body
+//    @Query("SELECT s FROM Shipment s WHERE sdestinationId = :destinationId")
+//    List<Shipment> findShipmentsByDestinationId(@Param("destinationId") Long destinationId);
+
+    // this works if we want to send the id inside the json body
+    @Query("SELECT s FROM Shipment s WHERE s.destination.destinationId = :destinationId")
+    List<Shipment> findShipmentsByDestinationId(@Param("destinationId") Long destinationId);
+
+
+
 
 }

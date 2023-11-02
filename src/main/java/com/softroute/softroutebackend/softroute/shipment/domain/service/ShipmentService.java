@@ -15,9 +15,10 @@ public interface ShipmentService {
     List<Shipment> getByQuantity(Integer quantity);
     List<Shipment> getByDeliveredDate(Date deliveryDate);
     List<Shipment> getByArrivalDate(Date arrivalDate);
-    Shipment create(Shipment shipment,Long employeeId, Long senderId);
+    Shipment create(Shipment shipment,Long employeeId, Long senderId,Long destinationId);
     Shipment update(Long shipment_id, Shipment request);
     ResponseEntity<?> delete(Long shipment_id);
     List<Shipment> getShipmentsByEmployeeId(Long employeeId);
     List<Shipment> getShipmentsBySenderId(Long senderId);
+    List<Shipment> getShipmentsByDestinationId(Long destinationId);
 }

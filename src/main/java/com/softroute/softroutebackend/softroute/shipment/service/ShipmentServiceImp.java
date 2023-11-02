@@ -2,6 +2,8 @@ package com.softroute.softroutebackend.softroute.shipment.service;
 
 import com.softroute.softroutebackend.shared.exception.ResourceNotFoundException;
 import com.softroute.softroutebackend.shared.exception.ResourceValidationException;
+import com.softroute.softroutebackend.softroute.destination.domain.model.Destination;
+import com.softroute.softroutebackend.softroute.destination.domain.presistence.DestinationRepository;
 import com.softroute.softroutebackend.softroute.employee.domain.model.Employee;
 import com.softroute.softroutebackend.softroute.employee.domain.persistence.EmployeeRepository;
 import com.softroute.softroutebackend.softroute.sender.domain.model.Sender;
@@ -18,6 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+
+
 @Service
 public class ShipmentServiceImp implements ShipmentService {
     private static final String ENTITY = "Shipment";
@@ -25,13 +29,14 @@ public class ShipmentServiceImp implements ShipmentService {
     private final ShipmentRepository shipmentRepository;
     private final EmployeeRepository employeeRepository;
     private final SenderRepository senderRepository;
-
+    private final DestinationRepository destinationRepository;
     private final Validator validator;
 
-    public ShipmentServiceImp(ShipmentRepository shipmentRepository,EmployeeRepository employeeRepository,SenderRepository senderRepository,Validator validator) {
+    public ShipmentServiceImp(ShipmentRepository shipmentRepository,EmployeeRepository employeeRepository,SenderRepository senderRepository,Validator validator, DestinationRepository destinationRepository) {
         this.shipmentRepository=shipmentRepository;
         this.employeeRepository=employeeRepository;
         this.senderRepository=senderRepository;
+        this.destinationRepository=destinationRepository;
         this.validator=validator;
     }
     @Override
@@ -76,15 +81,22 @@ public class ShipmentServiceImp implements ShipmentService {
     public List<Shipment> getShipmentsBySenderId(Long senderId) {
         return shipmentRepository.findShipmentsBySenderId(senderId);
     }
-    
+
     @Override
-    public Shipment create(Shipment shipment,Long employeeId, Long senderId) {
+    public List<Shipment> getShipmentsByDestinationId(Long destinationId) {
+        return shipmentRepository.findShipmentsByDestinationId(destinationId);
+    }
+
+    @Override
+    public Shipment create(Shipment shipment,Long employeeId, Long senderId, Long destinationId) {
         Set<ConstraintViolation<Shipment>> violations = validator.validate(shipment);
 
         if (!violations.isEmpty()) {
+            for (ConstraintViolation<Shipment> violation : violations) {
+                System.err.println("Validation error: " + violation.getPropertyPath() + " " + violation.getMessage());
+            }
             throw new ResourceValidationException(ENTITY, violations);
         }
-
         //search employee &w sender by id
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found with ID: " + employeeId));
@@ -92,9 +104,13 @@ public class ShipmentServiceImp implements ShipmentService {
         Sender sender = senderRepository.findById(senderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Sender not found with ID: " + senderId));
 
+        Destination destination = destinationRepository.findById(destinationId)
+                .orElseThrow(() -> new ResourceNotFoundException("Sender not found with ID: " + destinationId));
+
         //set employee and sender to shipment
         shipment.setEmployee(employee);
         shipment.setSender(sender);
+        shipment.setDestination(destination);
 
         //verify if there is an existing shipment with th same Id or code
         Shipment shipmentWithId = shipmentRepository.findShipmentById(shipment.getId());
