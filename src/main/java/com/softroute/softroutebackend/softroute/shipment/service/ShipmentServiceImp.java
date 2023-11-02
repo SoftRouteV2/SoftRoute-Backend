@@ -138,7 +138,26 @@ public class ShipmentServiceImp implements ShipmentService {
 
     @Override
     public Shipment update(Long shipmentId, Shipment request) {
-        return shipmentRepository.save(request);
+        Set<ConstraintViolation<Shipment>> violations = validator.validate(request);
+
+        if (!violations.isEmpty())
+            throw new ResourceValidationException(ENTITY, violations);
+
+        if(!shipmentRepository.existsById(shipmentId))
+            throw new ResourceNotFoundException("Shipment", shipmentId);
+        
+        return shipmentRepository.findById(shipmentId).map(shipment -> 
+                shipmentRepository.save(shipment.withDescription(request.getDescription())
+                        .withCode(request.getCode())
+                        .withFreight(request.getFreight())
+                        .withQuantity(request.getQuantity())
+                        .withDeliveredDate(request.getDeliveredDate())
+                        .withArrivalDate(request.getArrivalDate())
+                        .withConsignee(request.getConsignee())
+                        .withEmployee(request.getEmployee())
+                        .withSender(request.getSender())
+                        .withDestination(request.getDestination())))
+            .orElseThrow(() -> new ResourceNotFoundException(ENTITY, shipmentId));
     }
 
     @Override

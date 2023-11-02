@@ -57,7 +57,10 @@ public class TrackingServiceImp implements TrackingService {
         if(!trackingRepository.existsById(trackingId))
             throw new ResourceNotFoundException("Tracking", trackingId);
         
-            return trackingRepository.save(request);
+        return trackingRepository.findById(trackingId).map(existingTracking -> 
+            trackingRepository.save(existingTracking.withLatitude(request.getLatitude())
+                .withLongitude(request.getLongitude())))
+            .orElseThrow(() -> new ResourceNotFoundException(ENTITY, trackingId));
     }
 
     @Override

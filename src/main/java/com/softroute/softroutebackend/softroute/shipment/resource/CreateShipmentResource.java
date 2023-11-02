@@ -1,8 +1,5 @@
 package com.softroute.softroutebackend.softroute.shipment.resource;
 
-import com.softroute.softroutebackend.softroute.destination.domain.model.Destination;
-import com.softroute.softroutebackend.softroute.employee.domain.model.Employee;
-import com.softroute.softroutebackend.softroute.sender.domain.model.Sender;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

@@ -6,7 +6,6 @@ import com.softroute.softroutebackend.softroute.company.domain.presistence.Compa
 import com.softroute.softroutebackend.softroute.employee.domain.model.Employee;
 import com.softroute.softroutebackend.softroute.employee.domain.persistence.EmployeeRepository;
 import com.softroute.softroutebackend.softroute.employee.domain.service.EmployeeService;
-import com.softroute.softroutebackend.softroute.packages.domain.model.Package;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import org.springframework.http.ResponseEntity;

@@ -3,7 +3,6 @@ package com.softroute.softroutebackend.softroute.packages.resource;
 import com.softroute.softroutebackend.softroute.shipment.resource.ShipmentResource;
 import lombok.*;
 
-import java.util.Date;
 @Getter
 @Setter
 @With

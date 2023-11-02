@@ -2,7 +2,6 @@ package com.softroute.softroutebackend.softroute.packages.domain.service;
 
 import com.softroute.softroutebackend.softroute.packages.domain.model.Package;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
