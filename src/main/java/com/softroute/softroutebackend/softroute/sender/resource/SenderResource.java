@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SenderResource {
+    private Long senderId;
     private String fullname;
     private String dni;
 }

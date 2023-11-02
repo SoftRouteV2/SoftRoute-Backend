@@ -60,4 +60,16 @@ public class EmployeeController {
     public EmployeeResource getEmployeeName(@PathVariable String name) {
         return mapper.toResource(employeeService.getByName(name));
     }
+
+    @Operation(summary = "Get a Employee by Email", description = "Get a Employee by its Email.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Employee found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = PackageResource.class))}),
+            @ApiResponse(responseCode = "404", description = "Employee not found")
+    })
+    @GetMapping("/email/{email}")
+    public EmployeeResource getEmployeeEmail(@PathVariable String email) {
+        return mapper.toResource(employeeService.getEmployeeByEmail(email));
+    }
 }

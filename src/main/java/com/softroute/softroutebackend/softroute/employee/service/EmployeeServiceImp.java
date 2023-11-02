@@ -90,4 +90,9 @@ public class EmployeeServiceImp implements EmployeeService {
             throw new ResourceNotFoundException(ENTITY, companyId);
         }
     }
+
+    @Override
+    public Employee getEmployeeByEmail(String email) {
+        return employeeRepository.findByEmail(email);
+    }
 }

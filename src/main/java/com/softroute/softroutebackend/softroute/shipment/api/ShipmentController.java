@@ -80,8 +80,11 @@ public class ShipmentController {
                     ))
     })
     @PostMapping
-    public ShipmentResource createShipment(@RequestBody CreateShipmentResource resource){
-        return mapper.toResource(shipmentService.create(mapper.toModel(resource)));
+    public ShipmentResource createShipment(@RequestBody CreateShipmentResource resource,
+                                           @RequestParam Long employeeId,
+                                           @RequestParam Long senderId,
+                                           @RequestParam Long destinationId){
+        return mapper.toResource(shipmentService.create(mapper.toModel(resource),employeeId,senderId,destinationId));
     }
 
     //funciona UPDATE
@@ -93,7 +96,8 @@ public class ShipmentController {
                     ))
     })
     @PutMapping("/{shipmentId}")
-    public ShipmentResource updateShipment(@PathVariable Long shipmentId, @RequestBody UpdateShipmentResource resource) {
+    public ShipmentResource updateShipment(@PathVariable Long shipmentId,
+                                           @RequestBody UpdateShipmentResource resource) {
         return mapper.toResource(shipmentService.update(shipmentId, mapper.toModel(resource)));
     }
 
