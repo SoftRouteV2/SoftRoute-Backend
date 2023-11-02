@@ -15,7 +15,7 @@ import java.util.List;
 @CrossOrigin("*")
 @Tag(name = "Destinations / Shipments", description = "Read shipments by destination Id")
 @RestController
-@RequestMapping("api/v1/destination/{destinationId}/shipments")
+@RequestMapping("api/v1/destination/shipments")
 public class DestinationShipmentController {
     private final ShipmentService shipmentService;
 
@@ -32,8 +32,30 @@ public class DestinationShipmentController {
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ShipmentResource.class))})
     })
-    @GetMapping
+    @GetMapping("/by-destination/{destinationId}")
     public List<ShipmentResource> getAllByDestinationId(@PathVariable Long destinationId) {
         return mapper.modelList(shipmentService.getShipmentsByDestinationId(destinationId));
+    }
+
+    @Operation(summary = "Get All shipments ", description = "Get all shipments by departure stored in database.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Shipments found",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ShipmentResource.class))})
+    })
+    @GetMapping("/departure/{departure}")
+    public List<ShipmentResource> getAllByDeparture(@PathVariable String departure) {
+        return mapper.modelList(shipmentService.getShipmentsByDeparture(departure));
+    }
+
+    @Operation(summary = "Get All shipments ", description = "Get all shipments by departure stored in database.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Shipments found",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ShipmentResource.class))})
+    })
+    @GetMapping("/arrival/{arrival}")
+    public List<ShipmentResource> getAllByArrival(@PathVariable String arrival) {
+        return mapper.modelList(shipmentService.getShipmentsByArrival(arrival));
     }
 }

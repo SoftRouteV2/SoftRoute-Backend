@@ -88,6 +88,16 @@ public class ShipmentServiceImp implements ShipmentService {
     }
 
     @Override
+    public List<Shipment> getShipmentsByDeparture(String departure) {
+        return shipmentRepository.findShipmentsByDeparture(departure);
+    }
+
+    @Override
+    public List<Shipment> getShipmentsByArrival(String arrival) {
+        return shipmentRepository.findShipmentsByArrival(arrival);
+    }
+
+    @Override
     public Shipment create(Shipment shipment,Long employeeId, Long senderId, Long destinationId) {
         Set<ConstraintViolation<Shipment>> violations = validator.validate(shipment);
 

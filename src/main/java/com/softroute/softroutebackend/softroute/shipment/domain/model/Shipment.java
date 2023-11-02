@@ -45,7 +45,7 @@ public class Shipment  {
 //    @JoinColumn(name="destination_id")
 //    private Destination destination;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "destination_id")
     private Destination destination;
 
