@@ -67,6 +67,18 @@ public class CompanyControllerTest {
         assertEquals(mockCompany, result);
     }
 
+
+
+    @Test
+    public void testDeleteCompany() {
+        // Mock data
+        Long companyId = 1L;
+        when(companyService.delete(companyId)).thenReturn(ResponseEntity.ok().build());
+
+        ResponseEntity<?> result = companyController.deleteShipment(companyId);
+        assertEquals(ResponseEntity.ok().build(), result);
+    }
+
     @Test
     public void testUpdateCompany() {
         // Mock data
@@ -79,16 +91,6 @@ public class CompanyControllerTest {
 
         CompanyResource result = companyController.updateCompany(companyId, updateCompanyResource);
         assertEquals(mockCompany, result);
-    }
-
-    @Test
-    public void testDeleteCompany() {
-        // Mock data
-        Long companyId = 1L;
-        when(companyService.delete(companyId)).thenReturn(ResponseEntity.ok().build());
-
-        ResponseEntity<?> result = companyController.deleteShipment(companyId);
-        assertEquals(ResponseEntity.ok().build(), result);
     }
 
 
