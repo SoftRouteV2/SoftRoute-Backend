@@ -5,10 +5,7 @@ import com.softroute.softroutebackend.softroute.company.domain.model.Company;
 import com.softroute.softroutebackend.softroute.company.resource.CompanyResource;
 import com.softroute.softroutebackend.softroute.company.resource.CreateCompanyResource;
 import com.softroute.softroutebackend.softroute.company.resource.UpdateCompanyResource;
-import com.softroute.softroutebackend.softroute.packages.domain.model.Package;
-import com.softroute.softroutebackend.softroute.packages.resource.CreatePackageResource;
-import com.softroute.softroutebackend.softroute.packages.resource.PackageResource;
-import com.softroute.softroutebackend.softroute.packages.resource.UpdatePackageResource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.data.domain.Page;

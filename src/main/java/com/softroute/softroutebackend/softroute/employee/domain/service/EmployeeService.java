@@ -1,6 +1,5 @@
 package com.softroute.softroutebackend.softroute.employee.domain.service;
 
-import com.softroute.softroutebackend.softroute.company.domain.model.Company;
 import com.softroute.softroutebackend.softroute.employee.domain.model.Employee;
 import org.springframework.http.ResponseEntity;
 

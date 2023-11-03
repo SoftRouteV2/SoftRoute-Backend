@@ -1,8 +1,5 @@
 package com.softroute.softroutebackend.softroute.shipment.api;
 
-import com.softroute.softroutebackend.softroute.packages.domain.service.PackageService;
-import com.softroute.softroutebackend.softroute.packages.mapping.PackageMapper;
-import com.softroute.softroutebackend.softroute.packages.resource.PackageResource;
 import com.softroute.softroutebackend.softroute.shipment.domain.service.ShipmentService;
 import com.softroute.softroutebackend.softroute.shipment.mapping.ShipmentMapper;
 import com.softroute.softroutebackend.softroute.shipment.resource.ShipmentResource;

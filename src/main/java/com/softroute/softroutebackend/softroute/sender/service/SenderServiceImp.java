@@ -51,7 +51,13 @@ public class SenderServiceImp implements SenderService {
 
         if(!senderRepository.existsById(senderId))
             throw new ResourceNotFoundException("Sender", senderId);
-        return senderRepository.save(request);
+        
+        
+        return senderRepository.findById(senderId).map(existingSender -> 
+            senderRepository.save(existingSender
+            .withFullname(request.getFullname())
+            .withDni(request.getDni())))
+        .orElseThrow(() -> new ResourceNotFoundException("Sender", senderId));
     }
 
     @Override
