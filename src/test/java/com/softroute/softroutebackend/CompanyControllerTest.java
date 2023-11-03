@@ -67,6 +67,30 @@ public class CompanyControllerTest {
         assertEquals(mockCompany, result);
     }
 
+    @Test
+    public void testUpdateCompany() {
+        // Mock data
+        Long companyId = 1L;
+        UpdateCompanyResource updateCompanyResource = new UpdateCompanyResource();
+        CompanyResource mockCompany = new CompanyResource();
+        when(mapper.toModel(updateCompanyResource)).thenReturn(new Company());
+        when(companyService.update(eq(companyId), any(Company.class))).thenReturn(new Company());
+        when(mapper.toResource(any(Company.class))).thenReturn(mockCompany);
+
+        CompanyResource result = companyController.updateCompany(companyId, updateCompanyResource);
+        assertEquals(mockCompany, result);
+    }
+
+    @Test
+    public void testDeleteCompany() {
+        // Mock data
+        Long companyId = 1L;
+        when(companyService.delete(companyId)).thenReturn(ResponseEntity.ok().build());
+
+        ResponseEntity<?> result = companyController.deleteShipment(companyId);
+        assertEquals(ResponseEntity.ok().build(), result);
+    }
+
 
 }
 
