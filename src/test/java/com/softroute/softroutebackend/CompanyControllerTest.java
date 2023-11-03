@@ -54,6 +54,19 @@ public class CompanyControllerTest {
         assertEquals(mockCompany, result);
     }
 
+    @Test
+    public void testCreateCompany() {
+        // Mock data
+        CreateCompanyResource createCompanyResource = new CreateCompanyResource();
+        CompanyResource mockCompany = new CompanyResource();
+        when(mapper.toModel(createCompanyResource)).thenReturn(new Company());
+        when(companyService.create(any(Company.class))).thenReturn(new Company());
+        when(mapper.toResource(any(Company.class))).thenReturn(mockCompany);
+
+        CompanyResource result = companyController.createCompany(createCompanyResource);
+        assertEquals(mockCompany, result);
+    }
+
 
 }
 
