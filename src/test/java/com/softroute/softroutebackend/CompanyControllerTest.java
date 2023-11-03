@@ -42,6 +42,18 @@ public class CompanyControllerTest {
         assertEquals(1, result.size());
     }
 
+    @Test
+    public void testGetCompanyById() {
+        // Mock data
+        Long companyId = 1L;
+        CompanyResource mockCompany = new CompanyResource();
+        when(companyService.getById(companyId)).thenReturn(new Company());
+        when(mapper.toResource(any(Company.class))).thenReturn(mockCompany);
+
+        CompanyResource result = companyController.getCompanyById(companyId);
+        assertEquals(mockCompany, result);
+    }
+
 
 }
 
