@@ -83,8 +83,9 @@ public class ShipmentController {
     public ShipmentResource createShipment(@RequestBody CreateShipmentResource resource,
                                            @RequestParam Long employeeId,
                                            @RequestParam Long senderId,
-                                           @RequestParam Long destinationId){
-        return mapper.toResource(shipmentService.create(mapper.toModel(resource),employeeId,senderId,destinationId));
+                                           @RequestParam Long destinationId,
+                                           @RequestParam Long trackingId){
+        return mapper.toResource(shipmentService.create(mapper.toModel(resource),employeeId,senderId,destinationId,trackingId));
     }
 
     //funciona UPDATE

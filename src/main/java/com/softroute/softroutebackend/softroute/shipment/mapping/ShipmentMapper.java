@@ -34,4 +34,5 @@ public class ShipmentMapper implements Serializable {
         return mapper.mapList(modelList,ShipmentResource.class);
     }
 
+
 }

@@ -2,6 +2,7 @@ package com.softroute.softroutebackend.softroute.tracking.service;
 
 import com.softroute.softroutebackend.shared.exception.ResourceNotFoundException;
 import com.softroute.softroutebackend.shared.exception.ResourceValidationException;
+import com.softroute.softroutebackend.softroute.shipment.domain.model.Shipment;
 import com.softroute.softroutebackend.softroute.tracking.domain.model.Tracking;
 import com.softroute.softroutebackend.softroute.tracking.domain.presistence.TrackingRepository;
 import com.softroute.softroutebackend.softroute.tracking.domain.service.TrackingService;
@@ -62,6 +63,8 @@ public class TrackingServiceImp implements TrackingService {
                 .withLongitude(request.getLongitude())))
             .orElseThrow(() -> new ResourceNotFoundException(ENTITY, trackingId));
     }
+
+
 
     @Override
     public ResponseEntity<?> delete(Long trackingId) {
