@@ -4,6 +4,8 @@ import com.softroute.softroutebackend.shared.exception.ResourceNotFoundException
 import com.softroute.softroutebackend.shared.exception.ResourceValidationException;
 import com.softroute.softroutebackend.softroute.destination.domain.model.Destination;
 import com.softroute.softroutebackend.softroute.destination.domain.presistence.DestinationRepository;
+import com.softroute.softroutebackend.softroute.dth22.domain.model.Dht22;
+import com.softroute.softroutebackend.softroute.dth22.domain.presistence.Dht22Repository;
 import com.softroute.softroutebackend.softroute.employee.domain.model.Employee;
 import com.softroute.softroutebackend.softroute.employee.domain.persistence.EmployeeRepository;
 import com.softroute.softroutebackend.softroute.sender.domain.model.Sender;
@@ -13,6 +15,7 @@ import com.softroute.softroutebackend.softroute.shipment.domain.persistence.Ship
 import com.softroute.softroutebackend.softroute.shipment.domain.service.ShipmentService;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -25,18 +28,20 @@ import java.util.Set;
 @Service
 public class ShipmentServiceImp implements ShipmentService {
     private static final String ENTITY = "Shipment";
-
+    
     private final ShipmentRepository shipmentRepository;
     private final EmployeeRepository employeeRepository;
     private final SenderRepository senderRepository;
     private final DestinationRepository destinationRepository;
+    private final Dht22Repository dht22Repository;
     private final Validator validator;
 
-    public ShipmentServiceImp(ShipmentRepository shipmentRepository,EmployeeRepository employeeRepository,SenderRepository senderRepository,Validator validator, DestinationRepository destinationRepository) {
+    public ShipmentServiceImp(ShipmentRepository shipmentRepository,EmployeeRepository employeeRepository,SenderRepository senderRepository, Dht22Repository dht22Repository, Validator validator, DestinationRepository destinationRepository) {
         this.shipmentRepository=shipmentRepository;
         this.employeeRepository=employeeRepository;
         this.senderRepository=senderRepository;
         this.destinationRepository=destinationRepository;
+        this.dht22Repository=dht22Repository;
         this.validator=validator;
     }
     @Override
@@ -116,11 +121,18 @@ public class ShipmentServiceImp implements ShipmentService {
 
         Destination destination = destinationRepository.findById(destinationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Sender not found with ID: " + destinationId));
+        
+        //create dht22
+        Dht22 dht22 = new Dht22();
+        dht22.setTemperature("0");
+        dht22.setHumidity("0");
+        dht22 = dht22Repository.save(dht22);
 
-        //set employee and sender to shipment
+        //set employee, sender and dth2 to shipment
         shipment.setEmployee(employee);
         shipment.setSender(sender);
         shipment.setDestination(destination);
+        shipment.setDht22(dht22);
 
         //verify if there is an existing shipment with th same Id or code
         Shipment shipmentWithId = shipmentRepository.findShipmentById(shipment.getId());
