@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name="tracking")
+@Table(name="dht22")
 public class Dht22 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

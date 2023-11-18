@@ -13,7 +13,7 @@ import lombok.*;
 public class CreateDht22Resource {
     @NotBlank
     @Column(name = "temperature")
-    private String temoerature;
+    private String temperature;
 
     @NotNull
     @Column(name = "humidity")
