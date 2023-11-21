@@ -1,6 +1,7 @@
 package com.softroute.softroutebackend.softroute.shipment.domain.model;
 
 import com.softroute.softroutebackend.softroute.destination.domain.model.Destination;
+import com.softroute.softroutebackend.softroute.dth22.domain.model.Dht22;
 import com.softroute.softroutebackend.softroute.employee.domain.model.Employee;
 import com.softroute.softroutebackend.softroute.sender.domain.model.Sender;
 import jakarta.persistence.*;
@@ -49,4 +50,7 @@ public class Shipment  {
     @JoinColumn(name = "destination_id")
     private Destination destination;
 
+    @OneToOne
+    @JoinColumn(name="dht22_id")
+    private Dht22 dht22;
 }
