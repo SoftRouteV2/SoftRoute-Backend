@@ -5,6 +5,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -34,7 +37,6 @@ public class Dht22ControllerTest {
 
     @Test
     void testCreateDht22() {
-        // Mock data
         CreateDht22Resource createDth22Resource = new CreateDht22Resource();
         Dht22Resource mockDht22 = new Dht22Resource();
         when(mapper.toModel(createDth22Resource)).thenReturn(new Dht22());
@@ -57,6 +59,16 @@ public class Dht22ControllerTest {
     }
 
     @Test
+    void testGetAllDht22() {
+        List<Dht22Resource> mockDht22 = Collections.singletonList(new Dht22Resource());
+        when(dht22Service.getAll()).thenReturn(Collections.emptyList());
+        when(mapper.modelList(Collections.emptyList())).thenReturn(mockDht22);
+
+        List<Dht22Resource> result = dht22Controller.getAllDht22();
+        assertEquals(1, result.size());
+    }
+
+    @Test
     void testUpdateDht22() {
         Long dht22Id = 1L;
         UpdateDht22Resource updateDht22Resource = new UpdateDht22Resource();
@@ -67,6 +79,11 @@ public class Dht22ControllerTest {
 
         Dht22Resource result = dht22Controller.updateDht22(dht22Id, updateDht22Resource);
         assertEquals(mockDht22, result);  
+    }
+
+    @Test
+    void testDeleteDht22() {
+
     }
 }
 
