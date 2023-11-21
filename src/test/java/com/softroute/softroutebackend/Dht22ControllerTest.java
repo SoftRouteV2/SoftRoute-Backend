@@ -66,7 +66,7 @@ public class Dht22ControllerTest {
         when(mapper.toResource(any(Dht22.class))).thenReturn(mockDht22);
 
         Dht22Resource result = dht22Controller.updateDht22(dht22Id, updateDht22Resource);
-        assertEquals(mockDht22, result);
+        assertEquals(mockDht22, result);  
     }
 }
 
