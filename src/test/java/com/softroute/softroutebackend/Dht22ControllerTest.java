@@ -2,6 +2,7 @@ package com.softroute.softroutebackend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import com.softroute.softroutebackend.softroute.dth22.domain.service.Dht22Servic
 import com.softroute.softroutebackend.softroute.dth22.mapping.Dht22Mapper;
 import com.softroute.softroutebackend.softroute.dth22.resource.CreateDht22Resource;
 import com.softroute.softroutebackend.softroute.dth22.resource.Dht22Resource;
+import com.softroute.softroutebackend.softroute.dth22.resource.UpdateDht22Resource;
 
 @ExtendWith(MockitoExtension.class)
 public class Dht22ControllerTest {
@@ -56,7 +58,15 @@ public class Dht22ControllerTest {
 
     @Test
     void testUpdateDht22() {
+        Long dht22Id = 1L;
+        UpdateDht22Resource updateDht22Resource = new UpdateDht22Resource();
+        Dht22Resource mockDht22 = new Dht22Resource();
+        when(mapper.toModel(updateDht22Resource)).thenReturn(new Dht22());
+        when(dht22Service.update(eq(dht22Id), any(Dht22.class))).thenReturn(new Dht22());
+        when(mapper.toResource(any(Dht22.class))).thenReturn(mockDht22);
 
+        Dht22Resource result = dht22Controller.updateDht22(dht22Id, updateDht22Resource);
+        assertEquals(mockDht22, result);
     }
 }
 
