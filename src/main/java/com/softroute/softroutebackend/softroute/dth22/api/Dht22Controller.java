@@ -37,7 +37,7 @@ public class Dht22Controller {
                             schema = @Schema(implementation = Dht22Resource.class))})
     })
     @GetMapping
-    public List<Dht22Resource> getAllCompanies()
+    public List<Dht22Resource> getAllDht22()
     {
         return mapper.modelList(dht22Service.getAll());
     }
@@ -88,7 +88,7 @@ public class Dht22Controller {
             @ApiResponse(responseCode = "200", description = "Dht22 deleted", content = @Content(mediaType = "application/json"))
     })
     @DeleteMapping("{dht22Id}")
-    public ResponseEntity<?> deleteShipment(@PathVariable Long dht22Id) {
+    public ResponseEntity<?> deleteDht22(@PathVariable Long dht22Id) {
         return dht22Service.delete(dht22Id);
     }
 }
