@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 
 import com.softroute.softroutebackend.softroute.dth22.api.Dht22Controller;
 import com.softroute.softroutebackend.softroute.dth22.domain.model.Dht22;
@@ -83,7 +84,11 @@ public class Dht22ControllerTest {
 
     @Test
     void testDeleteDht22() {
+        Long dht22Id = 1L;
+        when(dht22Service.delete(dht22Id)).thenReturn(ResponseEntity.ok().build());
 
+        ResponseEntity<?> result = dht22Controller.deleteDht22(dht22Id);
+        assertEquals(ResponseEntity.ok().build(), result);
     }
 }
 
