@@ -44,18 +44,14 @@ public class Dht22ControllerTest {
     }
 
     @Test
-    void testDeleteShipment() {
-
-    }
-
-    @Test
-    void testGetAllCompanies() {
-
-    }
-
-    @Test
     void testGetDht22ById() {
+        Long Dht22Id = 1L;
+        Dht22Resource mockDht22 = new Dht22Resource();
+        when(dht22Service.getById(Dht22Id)).thenReturn(new Dht22());
+        when(mapper.toResource(any(Dht22.class))).thenReturn(mockDht22);
 
+        Dht22Resource result = dht22Controller.getDht22ById(Dht22Id);
+        assertEquals(mockDht22, result);
     }
 
     @Test
