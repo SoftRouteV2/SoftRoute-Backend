@@ -1,5 +1,6 @@
 package com.softroute.softroutebackend.softroute.tracking.domain.model;
 
+import com.softroute.softroutebackend.softroute.shipment.domain.model.Shipment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,4 +28,6 @@ public class Tracking {
     @Column(name = "longitude")
     @Size(max = 50)
     private String longitude;
+
+
 }

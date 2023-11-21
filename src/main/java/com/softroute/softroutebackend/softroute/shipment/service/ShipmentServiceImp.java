@@ -13,6 +13,8 @@ import com.softroute.softroutebackend.softroute.sender.domain.presistence.Sender
 import com.softroute.softroutebackend.softroute.shipment.domain.model.Shipment;
 import com.softroute.softroutebackend.softroute.shipment.domain.persistence.ShipmentRepository;
 import com.softroute.softroutebackend.softroute.shipment.domain.service.ShipmentService;
+import com.softroute.softroutebackend.softroute.tracking.domain.model.Tracking;
+import com.softroute.softroutebackend.softroute.tracking.domain.presistence.TrackingRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 
@@ -37,11 +39,27 @@ public class ShipmentServiceImp implements ShipmentService {
     private final Validator validator;
 
     public ShipmentServiceImp(ShipmentRepository shipmentRepository,EmployeeRepository employeeRepository,SenderRepository senderRepository, Dht22Repository dht22Repository, Validator validator, DestinationRepository destinationRepository) {
+
+    private final TrackingRepository trackingRepository;
+    private final Validator validator;
+
+    public ShipmentServiceImp(ShipmentRepository shipmentRepository,
+                              EmployeeRepository employeeRepository,
+                              SenderRepository senderRepository,
+                              Validator validator,
+                              DestinationRepository destinationRepository,
+                              TrackingRepository trackingRepository
+                              ) {
+
         this.shipmentRepository=shipmentRepository;
         this.employeeRepository=employeeRepository;
         this.senderRepository=senderRepository;
         this.destinationRepository=destinationRepository;
+
         this.dht22Repository=dht22Repository;
+
+        this.trackingRepository=trackingRepository;
+
         this.validator=validator;
     }
     @Override
@@ -103,7 +121,16 @@ public class ShipmentServiceImp implements ShipmentService {
     }
 
     @Override
-    public Shipment create(Shipment shipment,Long employeeId, Long senderId, Long destinationId) {
+    public Shipment getShipmentByTrackingId(Long trackingId) {
+        return shipmentRepository.findShipmentByTracking(trackingId);
+    }
+
+    @Override
+    public Shipment create(Shipment shipment,
+                           Long employeeId,
+                           Long senderId,
+                           Long destinationId,
+                           Long trackingId) {
         Set<ConstraintViolation<Shipment>> violations = validator.validate(shipment);
 
         if (!violations.isEmpty()) {
@@ -120,7 +147,7 @@ public class ShipmentServiceImp implements ShipmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Sender not found with ID: " + senderId));
 
         Destination destination = destinationRepository.findById(destinationId)
-                .orElseThrow(() -> new ResourceNotFoundException("Sender not found with ID: " + destinationId));
+                .orElseThrow(() -> new ResourceNotFoundException("Destination not found with ID: " + destinationId));
         
         //create dht22
         Dht22 dht22 = new Dht22();
@@ -133,6 +160,14 @@ public class ShipmentServiceImp implements ShipmentService {
         shipment.setSender(sender);
         shipment.setDestination(destination);
         shipment.setDht22(dht22);
+
+        Tracking tracking = trackingRepository.findById(trackingId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tracking not found with ID: " + trackingId));
+        //set employee and sender to shipment
+        shipment.setEmployee(employee);
+        shipment.setSender(sender);
+        shipment.setDestination(destination);
+        shipment.setTracking(tracking);
 
         //verify if there is an existing shipment with th same Id or code
         Shipment shipmentWithId = shipmentRepository.findShipmentById(shipment.getId());

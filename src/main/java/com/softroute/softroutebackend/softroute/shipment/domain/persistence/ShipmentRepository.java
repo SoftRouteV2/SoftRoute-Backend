@@ -1,6 +1,7 @@
 package com.softroute.softroutebackend.softroute.shipment.domain.persistence;
 
 import com.softroute.softroutebackend.softroute.shipment.domain.model.Shipment;
+import com.softroute.softroutebackend.softroute.tracking.domain.model.Tracking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -35,6 +36,8 @@ public interface ShipmentRepository extends JpaRepository<Shipment, Long> {
     @Query("SELECT s FROM Shipment s WHERE s.destination.arrival = :arrival")
     List<Shipment> findShipmentsByArrival(@Param("arrival") String arrival);
 
+    @Query("SELECT s FROM Shipment s WHERE s.tracking.trackingId = :trackingId")
+    Shipment findShipmentByTracking(@Param("trackingId") Long trackingId);
 
 
 
