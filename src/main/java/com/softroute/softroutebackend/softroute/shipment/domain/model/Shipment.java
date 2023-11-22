@@ -53,6 +53,7 @@ public class Shipment  {
     @OneToOne
     @JoinColumn(name="dht22_id")
     private Dht22 dht22;
+    @OneToOne
     @JoinColumn(name = "tracking_id")
     private Tracking tracking;
 }

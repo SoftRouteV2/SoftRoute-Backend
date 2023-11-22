@@ -37,18 +37,15 @@ public class ShipmentServiceImp implements ShipmentService {
     private final DestinationRepository destinationRepository;
     private final Dht22Repository dht22Repository;
     private final Validator validator;
-
-    public ShipmentServiceImp(ShipmentRepository shipmentRepository,EmployeeRepository employeeRepository,SenderRepository senderRepository, Dht22Repository dht22Repository, Validator validator, DestinationRepository destinationRepository) {
-
     private final TrackingRepository trackingRepository;
-    private final Validator validator;
 
     public ShipmentServiceImp(ShipmentRepository shipmentRepository,
                               EmployeeRepository employeeRepository,
                               SenderRepository senderRepository,
                               Validator validator,
                               DestinationRepository destinationRepository,
-                              TrackingRepository trackingRepository
+                              TrackingRepository trackingRepository,
+                              Dht22Repository dht22Repository
                               ) {
 
         this.shipmentRepository=shipmentRepository;
