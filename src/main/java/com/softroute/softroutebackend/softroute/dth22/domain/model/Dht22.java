@@ -1,10 +1,10 @@
-package com.softroute.softroutebackend.softroute.tracking.domain.model;
+package com.softroute.softroutebackend.softroute.dth22.domain.model;
 
 import com.softroute.softroutebackend.softroute.shipment.domain.model.Shipment;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @With
@@ -13,21 +13,20 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name="tracking")
-public class Tracking {
+@Table(name="dht22")
+public class Dht22 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long trackingId;
+    private Long id;
 
     @NotBlank
-    @Column(name = "latitude", nullable = false)
-    @Size(max = 50)
-    private String latitude;
+    @Column(name = "temperature")
+    private String temperature;
 
     @NotNull
-    @Column(name = "longitude")
-    @Size(max = 50)
-    private String longitude;
+    @Column(name = "humidity")
+    private String humidity;
 
-
+    @OneToOne(mappedBy = "dht22")
+    private Shipment shipment;
 }

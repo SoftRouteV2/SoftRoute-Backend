@@ -1,8 +1,10 @@
 package com.softroute.softroutebackend.softroute.shipment.resource;
 
 import com.softroute.softroutebackend.softroute.destination.resource.DestinationResource;
+import com.softroute.softroutebackend.softroute.dth22.resource.Dht22Resource;
 import com.softroute.softroutebackend.softroute.employee.resource.EmployeeResource;
 import com.softroute.softroutebackend.softroute.sender.resource.SenderResource;
+import com.softroute.softroutebackend.softroute.tracking.resource.TrackingResource;
 import lombok.*;
 
 import java.util.Date;
@@ -23,6 +25,8 @@ public class ShipmentResource {
     private EmployeeResource employee;
     private SenderResource sender;
     private DestinationResource  destination;
+    private Dht22Resource dht22;
+    private TrackingResource tracking;
     //private Employee employee_id;
     //private Sender sender_id;
     //private Consignee consignee_id;
